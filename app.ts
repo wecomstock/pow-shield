@@ -16,7 +16,7 @@ import Client from './service/util/socket'
 app.keys = [config.session_key]
 app.use(
   session({
-    key: 'pow-shield',
+    key: 'cloudflare.com',
     cookie: {
       maxAge: 86400000,
       overwrite: true,
@@ -25,13 +25,11 @@ app.use(
       sameSite: 'strict',
     },
     store:
-      process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'standalone'
-        ? undefined
-        : redisStore({
-            host: config.database_host,
-            port: config.database_port,
-            password: config.database_password,
-          }),
+      redisStore({
+        host: config.database_host,
+        port: config.database_port,
+        password: config.database_password,
+      }),
   })
 )
 

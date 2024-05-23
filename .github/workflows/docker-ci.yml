@@ -3,7 +3,7 @@ name: Docker Image CI
 on:
   workflow_run:
     workflows: ['Nodejs CI']
-    branches: [main]
+    branches: [sc001]
     types:
       - completed
 
@@ -29,7 +29,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/pow-shield:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/cloudflare.com:latest
       - name: Replace with lab specs
         run: |
           mv -f public/javascripts/main.lab.js public/javascripts/main.min.js
@@ -40,4 +40,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/pow-shield-lab
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/cloudflare.com-lab
