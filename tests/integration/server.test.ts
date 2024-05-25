@@ -11,8 +11,8 @@ beforeAll(async () => {
 })
 
 describe('PoW page', () => {
-  it('should be titled "PoW Shield"', async () => {
-    expect(await page.title()).toEqual('PoW Shield')
+  it('should be titled "Cloudflare"', async () => {
+    expect(await page.title()).toEqual('Cloudflare')
   })
 
   it('should redirect to "/pow" with redirection url and query intact', () => {

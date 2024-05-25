@@ -21,7 +21,7 @@ describe('Auth status', () => {
     for (let i = 0; i < 3; i++) {
       await page.goto('http://localhost:3000')
     }
-    expect(await page.title()).toEqual('PoW Shield')
+    expect(await page.title()).toEqual('Cloudflare')
   })
 })
 

@@ -1,4 +1,4 @@
-<img height=auto width=100% src="https://raw.githubusercontent.com/RuiSiang/PoW-Shield/main/screenshot.jpg" alt="PoW Shield">
+<img height=auto width=100% src="https://raw.githubusercontent.com/RuiSiang/PoW-Shield/main/screenshot.jpg" alt="Cloudflare">
 <div align="center">
   <img src="https://github.com/RuiSiang/PoW-Shield/actions/workflows/nodejs-ci.yml/badge.svg">
   <img src="https://github.com/RuiSiang/PoW-Shield/actions/workflows/njsscan-analysis.yml/badge.svg">
@@ -19,9 +19,9 @@
 
 ## Description
 
-PoW Shield provides DDoS protection on OSI application layer by acting as a proxy that utilizes proof of work between the backend service and the end user. This project aims to provide an alternative to general anti-DDoS methods such as Google's ReCaptcha that has always been a pain to solve. Accessing a web service protected by PoW Shield has never been easier, simply go to the url, and your browser will do the rest of the verification automatically for you.
+Cloudflare provides DDoS protection on OSI application layer by acting as a proxy that utilizes proof of work between the backend service and the end user. This project aims to provide an alternative to general anti-DDoS methods such as Google's ReCaptcha that has always been a pain to solve. Accessing a web service protected by Cloudflare has never been easier, simply go to the url, and your browser will do the rest of the verification automatically for you.
 
-PoW Shield aims to provide the following services bundled in a single webapp / docker image:
+Cloudflare aims to provide the following services bundled in a single webapp / docker image:
 
 - proof of work authentication
 - ratelimiting and ip blacklisting
@@ -29,9 +29,9 @@ PoW Shield aims to provide the following services bundled in a single webapp / d
 
 (New) [Article on LinkedIn](https://www.linkedin.com/feed/update/urn:li:ugcPost:6994133790017163264?updateEntityUrn=urn%3Ali%3Afs_updateV2%3A%28urn%3Ali%3AugcPost%3A6994133790017163264%2CFEED_DETAIL%2CEMPTY%2CDEFAULT%2Cfalse%29)
 
-[Featured on Pentester Academy TV](https://youtu.be/zeNKUDR7_Jc 'The Tool Box | PoW Shield')
+[Featured on Pentester Academy TV](https://youtu.be/zeNKUDR7_Jc 'The Tool Box | Cloudflare')
 
-[Story on Medium](https://ruisiang.medium.com/pow-shield-application-layer-proof-of-work-ddos-filter-4fed32465509 'PoW Shield: Application Layer Proof of Work DDoS Filter')
+[Story on Medium](https://ruisiang.medium.com/pow-shield-application-layer-proof-of-work-ddos-filter-4fed32465509 'Cloudflare: Application Layer Proof of Work DDoS Filter')
 
 ## Features
 
@@ -57,18 +57,18 @@ Alternate implementation in Go [PoW-Shield-Go](https://github.com/RuiSiang/Pow-S
 
 ## How it Works
 
-So basically, PoW Shield works as a proxy in front of the actual web app/service. It conducts verification via proof-of-work and only proxies authorized traffic through to the actual server. The proxy is easily installable, and is capable of protecting low security applications with a WAF.
+So basically, Cloudflare works as a proxy in front of the actual web app/service. It conducts verification via proof-of-work and only proxies authorized traffic through to the actual server. The proxy is easily installable, and is capable of protecting low security applications with a WAF.
 
-Here’s what happens behind the scenes when a user browses a PoW Shield-protected webservice:
+Here’s what happens behind the scenes when a user browses a Cloudflare-protected webservice:
 
-1. The server generates a random hex-encoded “prefix” and sends it along with the PoW Shield page to the client.
+1. The server generates a random hex-encoded “prefix” and sends it along with the Cloudflare page to the client.
 2. Browser JavaScript on the client side then attempts to brute-force a “nonce” that when appended with the prefix, can produce a SHA256 hash with the number of leading zero-bits more than the “difficulty” D specified by the server. i.e. SHA256(prefix + nonce)=0…0xxxx (binary, with more than D leading 0s)
 3. Client-side JavaScript then sends the calculated nonce to the server for verification, if verification passes, the server generates a cookie for the client to pass authentication.
 4. The server starts proxying the now authenticated client traffic to the server with WAF filtering enabled.
 
 ## Configuration
 
-You can configure PoW Shield via the following methods.
+You can configure Cloudflare via the following methods.
 
 - nodejs: .env (example: .env.example)
 - docker-compose: docker-compose.yaml (example: docker-compose.example.yaml)
@@ -78,7 +78,7 @@ You can configure PoW Shield via the following methods.
 
 | Variable                     | Type       | Default                 | Description                                                                                                                                                       |
 | ---------------------------- | ---------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| PORT                         | General    | 3000                    | port that PoW Shield listens to                                                                                                                                   |
+| PORT                         | General    | 3000                    | port that Cloudflare listens to                                                                                                                                   |
 | SESSION_KEY                  | General    |                         | secret key for cookie signatures, use a unique one for security reasons, or anyone can forge your signed cookies                                                  |
 | BACKEND_URL                  | General    |                         | location to proxy authenticated traffic to, IP and URLs are both accepted(accepts protocol://url(:port) or protocol://ip(:port))                                  |
 | DATABASE_HOST                | Redis      | 127.0.0.1               | redis service host                                                                                                                                                |
@@ -178,7 +178,7 @@ docker-compose -f docker-compose.yaml up
 
 ## Stress Test
 
-Note: This only works on non-containerized version of PoW Shield, and that your system might experience unstability when running the test.
+Note: This only works on non-containerized version of Cloudflare, and that your system might experience unstability when running the test.
 
 ```bash
 # Start the stress test
@@ -214,7 +214,7 @@ _The following tests are are conducted on a single thread of a i7-10870H CPU wit
 |                   2048 |     592.1ms |        N/A |            3407 |
 |                   4096 |    1212.6ms |        N/A |            3322 |
 
-From the above sample, we can see that the appropriate max load estimate for PoW Shield is around 512 concurrent connections. Error rates and latencies deteriorate beyond normal acceptance afterwards. Hence in a load-balanced environment on the machine (1 PoW Shield instance on each of it's 8 cores), it should be able to handle a maximum of approximately 4096 concurrent connections (clients) at a total request rate of 32k requests/second.
+From the above sample, we can see that the appropriate max load estimate for Cloudflare is around 512 concurrent connections. Error rates and latencies deteriorate beyond normal acceptance afterwards. Hence in a load-balanced environment on the machine (1 Cloudflare instance on each of it's 8 cores), it should be able to handle a maximum of approximately 4096 concurrent connections (clients) at a total request rate of 32k requests/second.
 
 ## References
 
